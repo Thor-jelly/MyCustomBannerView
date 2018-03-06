@@ -157,15 +157,6 @@ public class BannerView extends RelativeLayout {
         //初始化点的指示器
         initDotIndicator();
 
-        //设置初始化的第一条广告
-        mBannerDescribeTv.setText(mBannerAdapter.getBannerDescribe(mCurrentDotPosition));
-
-        if (mHeightProportion != 0 && mWideProportion != 0) {
-            int wide = getMeasuredWidth();
-            int height = (int) (wide * mHeightProportion / mWideProportion);
-            getLayoutParams().height = height;
-        }
-
         //设置轮播后广告和小点选中
         mBannerVp.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
             @Override
@@ -174,6 +165,17 @@ public class BannerView extends RelativeLayout {
                 pageSelect(position % mBannerAdapter.getCount());
             }
         });
+
+        //设置初始化的第一条广告
+        mBannerDescribeTv.setText(mBannerAdapter.getBannerDescribe(mCurrentDotPosition));
+
+        //动态指定高度
+        if (mHeightProportion == 0 && mWideProportion == 0) {
+            return;
+        }
+        int wide = getMeasuredWidth();
+        int height = (int) (wide * mHeightProportion / mWideProportion);
+        getLayoutParams().height = height;
     }
 
     /**
