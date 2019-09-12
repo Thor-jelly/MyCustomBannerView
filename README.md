@@ -1,6 +1,6 @@
 # [MyCustomBannerView](https://github.com/Thor-jelly/MyCustomBannerView)
 
-[![GitHub release](https://img.shields.io/badge/release-v1.0.0-green.svg)](https://github.com/Thor-jelly/MyCustomBannerView/releases)
+[![GitHub release](https://img.shields.io/badge/release-1.0.1-green.svg)](https://github.com/Thor-jelly/MyCustomBannerView/releases)
 
 ```
 allprojects {
@@ -10,7 +10,7 @@ allprojects {
 	}
 }
 dependencies {
-    compile 'com.github.Thor-jelly: MyCustomBannerView:v1.0.0'
+    compile 'com.github.Thor-jelly: MyCustomBannerView:1.0.1'
 }
 ```
 
@@ -409,6 +409,11 @@ dependencies {
      */
     public void setAdapter(BannerAdapter adapter) {
         mBannerAdapter = adapter;
+        if (mDotMarginTop > 0) {
+            RelativeLayout.LayoutParams bannerVpLayoutParams = (LayoutParams) mBannerVp.getLayoutParams();
+            bannerVpLayoutParams.setMargins(0, 0, 0, (int) mDotMarginTop);
+            mBannerVp.setLayoutParams(bannerVpLayoutParams);
+        }
         mBannerVp.setAdapter(adapter);
 
         //初始化点的指示器
@@ -483,6 +488,8 @@ dependencies {
     <?xml version="1.0" encoding="utf-8"?>
     <resources>
         <declare-styleable name="BannerView">
+            <!--点距离滚动条目距离-->
+            <attr name="dotMarginTop" format="dimension"/>
             <!--点选中的颜色-->
             <attr name="dotIndicatorSelectColor" format="color|reference"/>
             <!--点未选中的颜色-->
@@ -515,6 +522,8 @@ dependencies {
     private void initAttribute(AttributeSet attrs) {
         TypedArray array = mContext.obtainStyledAttributes(attrs, R.styleable.BannerView);
 
+        //获取点距离item距离
+        mDotMarginTop = array.getDimension(R.styleable.BannerView_dotMarginTop, 0);
         //获取点的位置
         mDotGravity = array.getInt(R.styleable.BannerView_dotGravity, 1);
         //获取小点选中和未选中样式
