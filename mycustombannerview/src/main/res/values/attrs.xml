@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="BannerView">
+        <!--点距离滚动条目距离-->
+        <attr name="dotMarginTop" format="dimension"/>
         <!--点选中的颜色-->
         <attr name="dotIndicatorSelectColor" format="color|reference"/>
         <!--点未选中的颜色-->
@@ -18,7 +20,7 @@
         <!--底部条颜色-->
         <attr name="bottomColor" format="color"/>
         <!--宽高比-->
-        <attr name="wideProportion" format="float" />
-        <attr name="heightProportion" format="float" />
+        <attr name="wideProportion" format="float"/>
+        <attr name="heightProportion" format="float"/>
     </declare-styleable>
 </resources>

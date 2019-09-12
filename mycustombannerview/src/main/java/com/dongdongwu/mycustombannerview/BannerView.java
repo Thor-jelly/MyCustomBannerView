@@ -4,13 +4,14 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.viewpager.widget.ViewPager;
 
 /**
  * 类描述：自定义banner <br/>
@@ -79,6 +80,10 @@ public class BannerView extends RelativeLayout {
      * 宽高比
      */
     private float mHeightProportion;
+    /**
+     * 获取点距离item距离
+     */
+    private float mDotMarginTop;
 
     public BannerView(Context context) {
         this(context, null);
@@ -103,6 +108,8 @@ public class BannerView extends RelativeLayout {
     private void initAttribute(AttributeSet attrs) {
         TypedArray array = mContext.obtainStyledAttributes(attrs, R.styleable.BannerView);
 
+        //获取点距离item距离
+        mDotMarginTop = array.getDimension(R.styleable.BannerView_dotMarginTop, 0);
         //获取点的位置
         mDotGravity = array.getInt(R.styleable.BannerView_dotGravity, 1);
         //获取小点选中和未选中样式
@@ -144,7 +151,6 @@ public class BannerView extends RelativeLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
     }
 
     /**
@@ -152,13 +158,18 @@ public class BannerView extends RelativeLayout {
      */
     public void setAdapter(BannerAdapter adapter) {
         mBannerAdapter = adapter;
+        if (mDotMarginTop > 0) {
+            RelativeLayout.LayoutParams bannerVpLayoutParams = (LayoutParams) mBannerVp.getLayoutParams();
+            bannerVpLayoutParams.setMargins(0, 0, 0, (int) mDotMarginTop);
+            mBannerVp.setLayoutParams(bannerVpLayoutParams);
+        }
         mBannerVp.setAdapter(adapter);
 
         //初始化点的指示器
         initDotIndicator();
 
         //设置轮播后广告和小点选中
-        mBannerVp.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+        mBannerVp.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 //监听当前选中的位置，并改变小点状态
