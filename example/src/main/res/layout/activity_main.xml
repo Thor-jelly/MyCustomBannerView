@@ -13,12 +13,15 @@
         android:layout_height="wrap_content"
         android:text="Hello World!"/>
 
+
+    <!--    app:dotHintType="dot"-->
     <com.dongdongwu.mycustombannerview.BannerView
         android:id="@+id/bv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:bottomColor="#66000000"
         app:dotGravity="right"
+        app:dotHintType="number"
         app:dotMarginTop="21dp"
         app:dotSize="8dp"
         app:heightProportion="1"

@@ -23,9 +23,23 @@ public abstract class BannerAdapter {
 
     /**
      * 获得当前广告位描述
+     *
      * @param currentDotPosition 当前选中轮播图位置
      */
-    public String getBannerDescribe(int currentDotPosition){
+    public String getBannerDescribe(int currentDotPosition) {
         return "";
-    };
+    }
+
+    /**
+     * 如果是自定义提示点需要覆写改方法
+     */
+    public View setDotHintView() {
+        return null;
+    }
+
+    /**
+     * 获取当前选中的位置
+     */
+    public void getPageSelect(int position) {
+    }
 }

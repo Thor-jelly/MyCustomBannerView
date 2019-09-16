@@ -3,6 +3,7 @@ package com.dongdongwu.example;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "123===";
     private BannerView mBannerView;
+    private View mCustomDotView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,41 @@ public class MainActivity extends AppCompatActivity {
         ss1.add("https://img5q.duitang.com/uploads/item/201504/24/20150424H4855_LfPvj.jpeg");
         ss1.add("https://bcs.91.com/rbpiczy/Wallpaper/2014/11/17/91496cd61ea94d1598345b94c6d246f7-9.jpg");
 
+        //小点类型
+       /* mBannerView.setAdapter(new BannerAdapter() {
+            @Override
+            public View getView(int position, View reuseView) {
+//                Log.d(TAG, "MainActivity--->>>getView: "+position);
+                ImageView iv = null;
+                if (reuseView == null) {
+                    iv = new ImageView(MainActivity.this);
+                    iv.setScaleType(ImageView.ScaleType.FIT_XY);
+                    Log.d(TAG, "getView: 界面View" + reuseView);
+                } else {
+                    iv = (ImageView) reuseView;
+                    Log.d(TAG, "getView: 界面复用View" + reuseView);
+                }
+                Glide.with(MainActivity.this)
+                        .load(ss.get(position))
+                        .apply(new RequestOptions().placeholder(R.mipmap.ic_launcher))
+                        .into(iv);
+                return iv;
+            }
+
+            @Override
+            public int getCount() {
+                return ss.size();
+            }
+
+//如果需要描述，覆写该方法
+//            @Override
+//            public String getBannerDescribe(int currentDotPosition) {
+//                return ss1.get(currentDotPosition);
+//            }
+        });*/
+
+
+        //自定义小点样式
         mBannerView.setAdapter(new BannerAdapter() {
             @Override
             public View getView(int position, View reuseView) {
@@ -86,8 +123,18 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public String getBannerDescribe(int currentDotPosition) {
-                return ss1.get(currentDotPosition);
+            public void getPageSelect(int position) {
+                TextView tv = mCustomDotView.findViewById(R.id.tv);
+                tv.setText(position + 1 + "");
+                TextView allTv = mCustomDotView.findViewById(R.id.all_tv);
+                allTv.setText(getCount() + "");
+            }
+
+            //设置自定义点样式
+            @Override
+            public View setDotHintView() {
+                mCustomDotView = LayoutInflater.from(MainActivity.this).inflate(R.layout.custom_dot, null);
+                return mCustomDotView;
             }
         });
         mBannerView.startRoll();

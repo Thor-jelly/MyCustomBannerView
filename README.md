@@ -1,6 +1,6 @@
 # [MyCustomBannerView](https://github.com/Thor-jelly/MyCustomBannerView)
 
-[![GitHub release](https://img.shields.io/badge/release-1.0.4-green.svg)](https://github.com/Thor-jelly/MyCustomBannerView/releases)
+[![GitHub release](https://img.shields.io/badge/release-1.0.5-green.svg)](https://github.com/Thor-jelly/MyCustomBannerView/releases)
 
 ```
 allprojects {
@@ -10,9 +10,11 @@ allprojects {
 	}
 }
 dependencies {
-    compile 'com.github.Thor-jelly: MyCustomBannerView:1.0.4'
+    compile 'com.github.Thor-jelly: MyCustomBannerView:1.0.5'
 }
 ```
+
+# 具体代码请看最新版本的源码
 
 # Android无限广播轮播
 > 使用了类似view复用的方法
@@ -122,8 +124,37 @@ dependencies {
     public abstract class BannerAdapter {
         /**
          * 根据位置获取ViewPager的子View
+         *
+         * @param reuseView 复用view
          */
-        public abstract View getView(int position);
+        public abstract View getView(int position, View reuseView);
+
+        /**
+         * 获取轮播图数量
+         */
+        public abstract int getCount();
+
+        /**
+         * 获得当前广告位描述
+         *
+         * @param currentDotPosition 当前选中轮播图位置
+         */
+        public String getBannerDescribe(int currentDotPosition) {
+            return "";
+        }
+
+        /**
+         * 如果是自定义提示点需要覆写改方法
+         */
+        public View setDotHintView() {
+            return null;
+        }
+        
+        /**
+         * 获取当前选中的位置
+         */
+        public void getPageSelect(int position) {
+        }
     }
     ```
     
@@ -488,6 +519,11 @@ dependencies {
     <?xml version="1.0" encoding="utf-8"?>
     <resources>
         <declare-styleable name="BannerView">
+            <!--提示点类型-->
+            <attr name="dotHintType" format="enum">
+                <enum name="dot" value="0"/>
+                <enum name="number" value="1"/>
+            </attr>
             <!--点距离滚动条目距离-->
             <attr name="dotMarginTop" format="dimension"/>
             <!--点选中的颜色-->
@@ -522,6 +558,8 @@ dependencies {
     private void initAttribute(AttributeSet attrs) {
         TypedArray array = mContext.obtainStyledAttributes(attrs, R.styleable.BannerView);
 
+        //获取提示点类型
+        mDotHintType = array.getInt(R.styleable.BannerView_dotHintType, 0);
         //获取点距离item距离
         mDotMarginTop = array.getDimension(R.styleable.BannerView_dotMarginTop, 0);
         //获取点的位置

@@ -84,6 +84,10 @@ public class BannerView extends RelativeLayout {
      * 获取点距离item距离
      */
     private float mDotMarginTop;
+    /**
+     * 提示点类型
+     */
+    private int mDotHintType = 0;
 
     public BannerView(Context context) {
         this(context, null);
@@ -108,6 +112,8 @@ public class BannerView extends RelativeLayout {
     private void initAttribute(AttributeSet attrs) {
         TypedArray array = mContext.obtainStyledAttributes(attrs, R.styleable.BannerView);
 
+        //获取提示点类型
+        mDotHintType = array.getInt(R.styleable.BannerView_dotHintType, 0);
         //获取点距离item距离
         mDotMarginTop = array.getDimension(R.styleable.BannerView_dotMarginTop, 0);
         //获取点的位置
@@ -156,7 +162,7 @@ public class BannerView extends RelativeLayout {
     /**
      * 设置适配器
      */
-    public void setAdapter(BannerAdapter adapter) {
+    public void setAdapter(final BannerAdapter adapter) {
         mBannerAdapter = adapter;
         if (mDotMarginTop > 0) {
             RelativeLayout.LayoutParams bannerVpLayoutParams = (LayoutParams) mBannerVp.getLayoutParams();
@@ -165,15 +171,25 @@ public class BannerView extends RelativeLayout {
         }
         mBannerVp.setAdapter(adapter);
 
-        //初始化点的指示器
-        initDotIndicator();
+        //如果是点自动初始化点，如果是number类型，需要自定义创建view
+        if (mDotHintType == 0) {
+            //初始化点的指示器
+            initDotIndicator();
+        } else {
+            //设置点的位置
+            mBannerDotLl.setGravity(getDotGravity());
+            mBannerDotLl.addView(adapter.setDotHintView());
+        }
 
+        adapter.getPageSelect(0);
         //设置轮播后广告和小点选中
         mBannerVp.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 //监听当前选中的位置，并改变小点状态
-                pageSelect(position % mBannerAdapter.getCount());
+                int selectPosition = position % mBannerAdapter.getCount();
+                adapter.getPageSelect(selectPosition);
+                pageSelect(selectPosition);
             }
         });
 
@@ -195,14 +211,16 @@ public class BannerView extends RelativeLayout {
      * 设置广告描述
      */
     private void pageSelect(int position) {
-        //把之前的点变成未选中状态
-        DotIndicatorView oldDotView = (DotIndicatorView) mBannerDotLl.getChildAt(mCurrentDotPosition);
-        oldDotView.setDrawable(mDotIndicatorNoSelectDrawable);
+        if (mDotHintType == 0) {
+            //把之前的点变成未选中状态
+            DotIndicatorView oldDotView = (DotIndicatorView) mBannerDotLl.getChildAt(mCurrentDotPosition);
+            oldDotView.setDrawable(mDotIndicatorNoSelectDrawable);
 
-        //把position位置的点变成选中状态
-        mCurrentDotPosition = position;
-        DotIndicatorView nowDotView = (DotIndicatorView) mBannerDotLl.getChildAt(mCurrentDotPosition);
-        nowDotView.setDrawable(mDotIndicatorSelectDrawable);
+            //把position位置的点变成选中状态
+            mCurrentDotPosition = position;
+            DotIndicatorView nowDotView = (DotIndicatorView) mBannerDotLl.getChildAt(mCurrentDotPosition);
+            nowDotView.setDrawable(mDotIndicatorSelectDrawable);
+        }
 
         //设置广告
         mBannerDescribeTv.setText(mBannerAdapter.getBannerDescribe(mCurrentDotPosition));

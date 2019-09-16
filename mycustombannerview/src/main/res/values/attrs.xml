@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="BannerView">
+        <!--提示点类型-->
+        <attr name="dotHintType" format="enum">
+            <enum name="dot" value="0"/>
+            <enum name="number" value="1"/>
+        </attr>
         <!--点距离滚动条目距离-->
         <attr name="dotMarginTop" format="dimension"/>
         <!--点选中的颜色-->
