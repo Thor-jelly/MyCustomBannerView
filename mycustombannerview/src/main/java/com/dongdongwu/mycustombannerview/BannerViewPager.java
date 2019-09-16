@@ -5,13 +5,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -60,7 +62,7 @@ public class BannerViewPager extends ViewPager {
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(@NonNull Message msg) {
             //每隔多少秒后切换到下一页
             setCurrentItem(getCurrentItem() + 1);
             //不断执行
@@ -122,6 +124,7 @@ public class BannerViewPager extends ViewPager {
         mBannerScroller.setScrollDuration(scrollDuration);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         int action = ev.getAction();
@@ -183,12 +186,13 @@ public class BannerViewPager extends ViewPager {
         }
 
         @Override
-        public boolean isViewFromObject(View view, Object object) {
+        public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
             //官方推荐这么写，源码中写了
             return view == object;
         }
 
         //创建viewpager 条目回调方法
+        @NonNull
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             /*
@@ -203,7 +207,7 @@ public class BannerViewPager extends ViewPager {
 
         //销毁ViewPager 条目回调方法
         @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
+        public void destroyItem(ViewGroup container, int position, @NonNull Object object) {
             /*
                 下面为什么注释呢，可以直接点进去看一下源码，只是抛出一个异常没有做其他处理
                 throw new UnsupportedOperationException("Required method destroyItem was not overridden");

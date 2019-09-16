@@ -2,23 +2,26 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.dongdongwu.example.MainActivity">
 
     <TextView
+        android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"/>
 
     <com.dongdongwu.mycustombannerview.BannerView
         android:id="@+id/bv"
-        app:dotGravity="right"
-        app:dotSize="8dp"
-        app:bottomColor="#66000000"
-        app:dotMarginTop="21dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        app:bottomColor="#66000000"
+        app:dotGravity="right"
+        app:dotMarginTop="21dp"
+        app:dotSize="8dp"
+        app:heightProportion="1"
+        app:wideProportion="1"/>
 
 </LinearLayout>

@@ -184,9 +184,15 @@ public class BannerView extends RelativeLayout {
         if (mHeightProportion == 0 && mWideProportion == 0) {
             return;
         }
-        int wide = getMeasuredWidth();
-        int height = (int) (wide * mHeightProportion / mWideProportion);
-        getLayoutParams().height = height;
+
+        post(new Runnable() {
+            @Override
+            public void run() {
+                int wide = getMeasuredWidth();
+                int height = (int) (wide * mHeightProportion / mWideProportion);
+                getLayoutParams().height = height;
+            }
+        });
     }
 
     /**
@@ -267,9 +273,9 @@ public class BannerView extends RelativeLayout {
         if (mDotGravity == 0) {
             return Gravity.CENTER;
         } else if (mDotGravity == 1) {
-            return Gravity.RIGHT;
+            return Gravity.END;
         } else {
-            return Gravity.LEFT;
+            return Gravity.START;
         }
     }
 }
