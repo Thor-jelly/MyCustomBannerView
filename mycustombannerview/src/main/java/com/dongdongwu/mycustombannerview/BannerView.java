@@ -185,14 +185,9 @@ public class BannerView extends RelativeLayout {
             return;
         }
 
-        post(new Runnable() {
-            @Override
-            public void run() {
-                int wide = getMeasuredWidth();
-                int height = (int) (wide * mHeightProportion / mWideProportion);
-                getLayoutParams().height = height;
-            }
-        });
+        int wide = getMeasuredWidth();
+        int height = (int) (wide * mHeightProportion / mWideProportion);
+        getLayoutParams().height = height;
     }
 
     /**

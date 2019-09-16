@@ -2,11 +2,12 @@ package com.dongdongwu.example;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -36,7 +37,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        initVp();
+        mBannerView.post(new Runnable() {
+            @Override
+            public void run() {
+                initVp();
+            }
+        });
     }
 
     private void initVp() {
@@ -62,10 +68,10 @@ public class MainActivity extends AppCompatActivity {
                 if (reuseView == null) {
                     iv = new ImageView(MainActivity.this);
                     iv.setScaleType(ImageView.ScaleType.FIT_XY);
-                    Log.d(TAG, "getView: 界面View"+reuseView);
+                    Log.d(TAG, "getView: 界面View" + reuseView);
                 } else {
                     iv = (ImageView) reuseView;
-                    Log.d(TAG, "getView: 界面复用View"+reuseView);
+                    Log.d(TAG, "getView: 界面复用View" + reuseView);
                 }
                 Glide.with(MainActivity.this)
                         .load(ss.get(position))
@@ -84,5 +90,6 @@ public class MainActivity extends AppCompatActivity {
                 return ss1.get(currentDotPosition);
             }
         });
+        mBannerView.startRoll();
     }
 }
