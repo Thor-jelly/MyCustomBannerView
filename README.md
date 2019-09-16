@@ -1,6 +1,6 @@
 # [MyCustomBannerView](https://github.com/Thor-jelly/MyCustomBannerView)
 
-[![GitHub release](https://img.shields.io/badge/release-1.0.5-green.svg)](https://github.com/Thor-jelly/MyCustomBannerView/releases)
+[![GitHub release](https://img.shields.io/badge/release-1.0.6-green.svg)](https://github.com/Thor-jelly/MyCustomBannerView/releases)
 
 ```
 allprojects {
@@ -10,7 +10,7 @@ allprojects {
 	}
 }
 dependencies {
-    compile 'com.github.Thor-jelly: MyCustomBannerView:1.0.5'
+    compile 'com.github.Thor-jelly: MyCustomBannerView:1.0.6'
 }
 ```
 
@@ -149,7 +149,7 @@ dependencies {
         public View setDotHintView() {
             return null;
         }
-        
+
         /**
          * 获取当前选中的位置
          */
