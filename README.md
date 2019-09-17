@@ -1,6 +1,6 @@
 # [MyCustomBannerView](https://github.com/Thor-jelly/MyCustomBannerView)
 
-[![GitHub release](https://img.shields.io/badge/release-1.0.6-green.svg)](https://github.com/Thor-jelly/MyCustomBannerView/releases)
+[![GitHub release](https://img.shields.io/badge/release-1.0.7-green.svg)](https://github.com/Thor-jelly/MyCustomBannerView/releases)
 
 ```
 allprojects {
@@ -10,11 +10,30 @@ allprojects {
 	}
 }
 dependencies {
-    compile 'com.github.Thor-jelly: MyCustomBannerView:1.0.6'
+    compile 'com.github.Thor-jelly: MyCustomBannerView:1.0.7'
 }
 ```
 
 # 具体代码请看最新版本的源码
+
+# 已具有功能
+
+- xml属性
+    - 是否允许自动滚动 enableAutoScroll
+    - 提示点类型 dotHintType
+    - 点距离滚动条目距离 dotMarginTop
+    - 点选中的颜色 dotIndicatorSelectColor
+    - 点未选中的颜色 dotIndicatorNoSelectColor
+    - 点的大小 dotSize
+    - 点的间距 dotDistance
+    - 点的位置 dotGravity
+    - 底部条颜色 bottomColor
+    - 宽高比 wideProportion heightProportion
+
+- 代码设置
+    - setAdapter设置
+    - startRoll 开始轮播，需要在xml设置可以自动轮播
+    - setScrollDuration 设置轮播切换时间
 
 # Android无限广播轮播
 > 使用了类似view复用的方法
@@ -519,6 +538,8 @@ dependencies {
     <?xml version="1.0" encoding="utf-8"?>
     <resources>
         <declare-styleable name="BannerView">
+            <!--是否允许自动滚动-->
+            <attr name="enableAutoScroll" format="boolean"/>
             <!--提示点类型-->
             <attr name="dotHintType" format="enum">
                 <enum name="dot" value="0"/>

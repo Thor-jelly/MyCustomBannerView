@@ -88,6 +88,10 @@ public class BannerView extends RelativeLayout {
      * 提示点类型
      */
     private int mDotHintType = 0;
+    /**
+     * 是否允许自动滚动
+     */
+    private boolean mEnableAutoScroll = true;
 
     public BannerView(Context context) {
         this(context, null);
@@ -112,6 +116,8 @@ public class BannerView extends RelativeLayout {
     private void initAttribute(AttributeSet attrs) {
         TypedArray array = mContext.obtainStyledAttributes(attrs, R.styleable.BannerView);
 
+        //获取是否允许自动滚动
+        mEnableAutoScroll = array.getBoolean(R.styleable.BannerView_enableAutoScroll, true);
         //获取提示点类型
         mDotHintType = array.getInt(R.styleable.BannerView_dotHintType, 0);
         //获取点距离item距离
@@ -170,6 +176,7 @@ public class BannerView extends RelativeLayout {
             mBannerVp.setLayoutParams(bannerVpLayoutParams);
         }
         mBannerVp.setAdapter(adapter);
+        mBannerVp.setEnabledAutoScroll(mEnableAutoScroll);
 
         //如果是点自动初始化点，如果是number类型，需要自定义创建view
         if (mDotHintType == 0) {

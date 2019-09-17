@@ -59,14 +59,21 @@ public class BannerViewPager extends ViewPager {
      */
     List<View> mViewContainerList;
 
+    /**
+     * 是否允许自动滚动
+     */
+    private boolean mEnableAutoScroll = true;
+
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
-            //每隔多少秒后切换到下一页
-            setCurrentItem(getCurrentItem() + 1);
-            //不断执行
-            startRoll();
+            if (mEnableAutoScroll) {
+                //每隔多少秒后切换到下一页
+                setCurrentItem(getCurrentItem() + 1);
+                //不断执行
+                startRoll();
+            }
         }
     };
     private List<View> mReuseView;
@@ -92,6 +99,15 @@ public class BannerViewPager extends ViewPager {
         }
     }
 
+    public void setEnabledAutoScroll(boolean enableAutoScroll) {
+        mEnableAutoScroll = enableAutoScroll;
+        if (enableAutoScroll) {
+            startRoll();
+        } else {
+            stopRoll();
+        }
+    }
+
     /**
      * 设置适配器
      */
@@ -114,7 +130,9 @@ public class BannerViewPager extends ViewPager {
         }
 
         //发送延迟空消息，实现自动轮播
-        mHandler.sendEmptyMessageDelayed(SCROLL_MSG, mScrollNextTime);
+        if (mEnableAutoScroll) {
+            mHandler.sendEmptyMessageDelayed(SCROLL_MSG, mScrollNextTime);
+        }
     }
 
     /**
@@ -238,8 +256,10 @@ public class BannerViewPager extends ViewPager {
                 return;
             }
 
-            //开启轮播
-            startRoll();
+            if (mEnableAutoScroll) {
+                //开启轮播
+                startRoll();
+            }
         }
 
         @Override
