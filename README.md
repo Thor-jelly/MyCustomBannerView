@@ -14,8 +14,6 @@ dependencies {
 }
 ```
 
-# 具体代码请看最新版本的源码
-
 # 已具有功能
 
 - xml属性
@@ -34,6 +32,8 @@ dependencies {
     - setAdapter设置
     - startRoll 开始轮播，需要在xml设置可以自动轮播
     - setScrollDuration 设置轮播切换时间
+
+# 具体代码请看最新版本的源码
 
 # Android无限广播轮播
 > 使用了类似view复用的方法
