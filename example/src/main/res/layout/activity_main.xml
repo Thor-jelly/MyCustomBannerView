@@ -7,24 +7,38 @@
     android:orientation="vertical"
     tools:context="com.dongdongwu.example.MainActivity">
 
-    <TextView
-        android:id="@+id/tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"/>
-
-
-    <!--    app:dotHintType="dot"-->
-    <com.dongdongwu.mycustombannerview.BannerView
-        android:id="@+id/bv"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:bottomColor="#66000000"
-        app:dotGravity="right"
-        app:dotHintType="number"
-        app:dotMarginTop="21dp"
-        app:dotSize="8dp"
-        app:heightProportion="1"
-        app:wideProportion="1"/>
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hello World!"/>
+
+
+            <!--    app:dotHintType="dot"-->
+            <com.dongdongwu.mycustombannerview.BannerView
+                android:id="@+id/bv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:bottomColor="#66000000"
+                app:dotGravity="right"
+                app:dotHintType="number"
+                app:dotMarginTop="21dp"
+                app:dotSize="8dp"
+                app:heightProportion="1"
+                app:wideProportion="1"/>
+
+            <View
+                android:background="#f00"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

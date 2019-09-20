@@ -146,10 +146,16 @@ public class BannerViewPager extends ViewPager {
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         int action = ev.getAction();
+//        Log.e("123===", "-->");
+//        Log.e("123===", "-->" + action);
+//        Log.e("123===", "-->");
         if (action == MotionEvent.ACTION_DOWN) {
             //销毁Handle 停止发送，解决内存泄漏
             stopRoll();
-        } else if (action == MotionEvent.ACTION_UP) {
+        } else if (
+                action == MotionEvent.ACTION_UP
+                        || action == MotionEvent.ACTION_CANCEL
+        ) {
             //开始自动轮播
             startRoll();
         }
