@@ -176,32 +176,36 @@ public class BannerView extends RelativeLayout {
             mBannerVp.setLayoutParams(bannerVpLayoutParams);
         }
         mBannerVp.setAdapter(adapter);
-        mBannerVp.setEnabledAutoScroll(mEnableAutoScroll);
 
-        //如果是点自动初始化点，如果是number类型，需要自定义创建view
-        if (mDotHintType == 0) {
-            //初始化点的指示器
-            initDotIndicator();
-        } else {
-            //设置点的位置
-            mBannerDotLl.setGravity(getDotGravity());
-            mBannerDotLl.addView(adapter.setDotHintView());
-        }
-
-        adapter.getPageSelect(0);
-        //设置轮播后广告和小点选中
-        mBannerVp.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                //监听当前选中的位置，并改变小点状态
-                int selectPosition = position % mBannerAdapter.getCount();
-                adapter.getPageSelect(selectPosition);
-                pageSelect(selectPosition);
+        if (mBannerAdapter.getCount() > 1) {
+            mBannerVp.setEnabledAutoScroll(mEnableAutoScroll);
+            //如果是点自动初始化点，如果是number类型，需要自定义创建view
+            if (mDotHintType == 0) {
+                //初始化点的指示器
+                initDotIndicator();
+            } else {
+                //设置点的位置
+                mBannerDotLl.setGravity(getDotGravity());
+                mBannerDotLl.addView(adapter.setDotHintView());
             }
-        });
 
-        //设置初始化的第一条广告
-        mBannerDescribeTv.setText(mBannerAdapter.getBannerDescribe(mCurrentDotPosition));
+            adapter.getPageSelect(0);
+            //设置轮播后广告和小点选中
+            mBannerVp.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+                @Override
+                public void onPageSelected(int position) {
+                    //监听当前选中的位置，并改变小点状态
+                    int selectPosition = position % mBannerAdapter.getCount();
+                    adapter.getPageSelect(selectPosition);
+                    pageSelect(selectPosition);
+                }
+            });
+
+            //设置初始化的第一条广告
+            mBannerDescribeTv.setText(mBannerAdapter.getBannerDescribe(mCurrentDotPosition));
+        } else {
+            mBannerBottomRl.setVisibility(View.INVISIBLE);
+        }
 
         //动态指定高度
         if (mHeightProportion == 0 && mWideProportion == 0) {

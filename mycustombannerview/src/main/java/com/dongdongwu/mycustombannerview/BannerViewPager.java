@@ -114,7 +114,7 @@ public class BannerViewPager extends ViewPager {
     public void setAdapter(BannerAdapter adapter) {
         mBannerAdapter = adapter;
         //设置父类ViewPager的adapter
-        setAdapter(new BannerPagerAdapter());
+        setAdapter(new BannerPagerAdapter(adapter.getCount()));
 
         //注册生命周期
         mActivity.getApplication().registerActivityLifecycleCallbacks(mDefaultActivityLifecycleCallbacks);
@@ -124,6 +124,11 @@ public class BannerViewPager extends ViewPager {
      * 实现自动轮播
      */
     public void startRoll() {
+        //如果图小于2张不实现轮播
+        if (mBannerAdapter != null && mBannerAdapter.getCount() < 2) {
+            return;
+        }
+
         //清除消息，防止多次发送
         if (mHandler.hasMessages(SCROLL_MSG)) {
             mHandler.removeMessages(SCROLL_MSG);
@@ -149,15 +154,18 @@ public class BannerViewPager extends ViewPager {
 //        Log.e("123===", "-->");
 //        Log.e("123===", "-->" + action);
 //        Log.e("123===", "-->");
-        if (action == MotionEvent.ACTION_DOWN) {
-            //销毁Handle 停止发送，解决内存泄漏
-            stopRoll();
-        } else if (
-                action == MotionEvent.ACTION_UP
-                        || action == MotionEvent.ACTION_CANCEL
-        ) {
-            //开始自动轮播
-            startRoll();
+        //如果图小于2张不实现轮播，因此点击事件不需要处理
+        if (mBannerAdapter != null && mBannerAdapter.getCount() > 1) {
+            if (action == MotionEvent.ACTION_DOWN) {
+                //销毁Handle 停止发送，解决内存泄漏
+                stopRoll();
+            } else if (
+                    action == MotionEvent.ACTION_UP
+                            || action == MotionEvent.ACTION_CANCEL
+            ) {
+                //开始自动轮播
+                startRoll();
+            }
         }
         return super.onTouchEvent(ev);
     }
@@ -182,6 +190,12 @@ public class BannerViewPager extends ViewPager {
      * 销毁Handle 停止发送，解决内存泄漏
      */
     private void stopRoll() {
+
+        //如果图小于2张不实现轮播
+        if (mBannerAdapter != null && mBannerAdapter.getCount() < 2) {
+            return;
+        }
+
         //销毁Handle 停止发送，解决内存泄漏
         if (mHandler.hasMessages(SCROLL_MSG)) {
             mHandler.removeMessages(SCROLL_MSG);
@@ -205,9 +219,19 @@ public class BannerViewPager extends ViewPager {
      * 给ViewPager设置适配器
      */
     private class BannerPagerAdapter extends PagerAdapter {
+        private int count;
+
+        public BannerPagerAdapter(int count) {
+            this.count = count;
+        }
+
         @Override
         public int getCount() {
             //为了实现无限循环
+            if (count == 1) {
+                //如果只有一张图片不循环
+                return 1;
+            }
             return Integer.MAX_VALUE;
         }
 
@@ -262,6 +286,11 @@ public class BannerViewPager extends ViewPager {
                 return;
             }
 
+            //如果图小于2张不实现轮播
+            if (mBannerAdapter != null && mBannerAdapter.getCount() < 2) {
+                return;
+            }
+
             if (mEnableAutoScroll) {
                 //开启轮播
                 startRoll();
@@ -274,6 +303,11 @@ public class BannerViewPager extends ViewPager {
             Log.d(TAG, "onActivityStopped: ");
             //是不是监听当前activity的生命周期
             if (mActivity != activity) {
+                return;
+            }
+
+            //如果图小于2张不实现轮播
+            if (mBannerAdapter != null && mBannerAdapter.getCount() < 2) {
                 return;
             }
 
