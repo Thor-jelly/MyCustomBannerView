@@ -92,6 +92,10 @@ public class BannerView extends RelativeLayout {
      * 是否允许自动滚动
      */
     private boolean mEnableAutoScroll = true;
+    /**
+     * 是否允许无限轮回
+     */
+    private boolean mEnableUnlimitedScroll = true;
 
     public BannerView(Context context) {
         this(context, null);
@@ -116,6 +120,8 @@ public class BannerView extends RelativeLayout {
     private void initAttribute(AttributeSet attrs) {
         TypedArray array = mContext.obtainStyledAttributes(attrs, R.styleable.BannerView);
 
+        //是否允许无限轮回
+        mEnableUnlimitedScroll = array.getBoolean(R.styleable.BannerView_enableUnlimitedScroll, true);
         //获取是否允许自动滚动
         mEnableAutoScroll = array.getBoolean(R.styleable.BannerView_enableAutoScroll, true);
         //获取提示点类型
@@ -175,7 +181,8 @@ public class BannerView extends RelativeLayout {
             bannerVpLayoutParams.setMargins(0, 0, 0, (int) mDotMarginTop);
             mBannerVp.setLayoutParams(bannerVpLayoutParams);
         }
-        mBannerVp.setAdapter(adapter);
+        mBannerVp.setAdapter(adapter,
+                mEnableUnlimitedScroll);
 
         if (mBannerAdapter.getCount() > 1) {
             mBannerVp.setEnabledAutoScroll(mEnableAutoScroll);

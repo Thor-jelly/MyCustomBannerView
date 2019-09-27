@@ -20,6 +20,7 @@ dependencies {
     - 当只有banner的count为1时，底部被INVISIBLE
 
 - xml属性
+    - 是否允许无限轮回 enableUnlimitedScroll
     - 是否允许自动滚动 enableAutoScroll
     - 提示点类型 dotHintType
     - 点距离滚动条目距离 dotMarginTop
@@ -541,6 +542,8 @@ dependencies {
     <?xml version="1.0" encoding="utf-8"?>
     <resources>
         <declare-styleable name="BannerView">
+            <!--是否允许无限轮回-->
+            <attr name="enableUnlimitedScroll" format="boolean"/>
             <!--是否允许自动滚动-->
             <attr name="enableAutoScroll" format="boolean"/>
             <!--提示点类型-->

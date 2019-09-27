@@ -64,13 +64,26 @@ public class BannerViewPager extends ViewPager {
      */
     private boolean mEnableAutoScroll = true;
 
+    /**
+     * 是否允许无限轮回
+     */
+    private boolean mEnableUnlimitedScroll = true;
+
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
             if (mEnableAutoScroll) {
                 //每隔多少秒后切换到下一页
-                setCurrentItem(getCurrentItem() + 1);
+                int itemCount = getCurrentItem() + 1;
+                int allCount = mBannerAdapter.getCount();
+                if (!mEnableUnlimitedScroll
+                        && itemCount >= allCount
+                ) {
+                    return;
+                }
+
+                setCurrentItem(itemCount);
                 //不断执行
                 startRoll();
             }
@@ -110,11 +123,14 @@ public class BannerViewPager extends ViewPager {
 
     /**
      * 设置适配器
+     *
+     * @param enableUnlimitedScroll 是否允许无限轮播
      */
-    public void setAdapter(BannerAdapter adapter) {
+    public void setAdapter(BannerAdapter adapter, boolean enableUnlimitedScroll) {
         mBannerAdapter = adapter;
+        mEnableUnlimitedScroll = enableUnlimitedScroll;
         //设置父类ViewPager的adapter
-        setAdapter(new BannerPagerAdapter(adapter.getCount()));
+        setAdapter(new BannerPagerAdapter(adapter.getCount(), enableUnlimitedScroll));
 
         //注册生命周期
         mActivity.getApplication().registerActivityLifecycleCallbacks(mDefaultActivityLifecycleCallbacks);
@@ -220,9 +236,11 @@ public class BannerViewPager extends ViewPager {
      */
     private class BannerPagerAdapter extends PagerAdapter {
         private int count;
+        private boolean enableUnlimitedScroll;
 
-        public BannerPagerAdapter(int count) {
+        public BannerPagerAdapter(int count, boolean enableUnlimitedScroll) {
             this.count = count;
+            this.enableUnlimitedScroll = enableUnlimitedScroll;
         }
 
         @Override
@@ -232,6 +250,11 @@ public class BannerViewPager extends ViewPager {
                 //如果只有一张图片不循环
                 return 1;
             }
+
+            if (!enableUnlimitedScroll) {
+                return count;
+            }
+
             return Integer.MAX_VALUE;
         }
 
