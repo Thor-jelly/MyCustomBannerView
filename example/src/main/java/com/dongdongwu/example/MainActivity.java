@@ -50,10 +50,10 @@ public class MainActivity extends AppCompatActivity {
     private void initVp() {
         final List<String> ss = new ArrayList<>();
         ss.add("https://bbs.everychina.com/data/attachment/forum/201312/04/102637cwnwrywccfxwab22.jpg");
-//        ss.add("https://img3.100bt.com/upload/ttq/20131121/1385034610130_middle.jpg");
-//        ss.add("https://pic25.nipic.com/20121123/9830190_172507668164_2.jpg");
-//        ss.add("https://img5q.duitang.com/uploads/item/201504/24/20150424H4855_LfPvj.jpeg");
-//        ss.add("https://bcs.91.com/rbpiczy/Wallpaper/2014/11/17/91496cd61ea94d1598345b94c6d246f7-9.jpg");
+        ss.add("https://img3.100bt.com/upload/ttq/20131121/1385034610130_middle.jpg");
+        ss.add("https://pic25.nipic.com/20121123/9830190_172507668164_2.jpg");
+        ss.add("https://img5q.duitang.com/uploads/item/201504/24/20150424H4855_LfPvj.jpeg");
+        ss.add("https://bcs.91.com/rbpiczy/Wallpaper/2014/11/17/91496cd61ea94d1598345b94c6d246f7-9.jpg");
 
         final List<String> ss1 = new ArrayList<>();
         ss1.add("https://bbs.everychina.com/data/attachment/forum/201312/04/102637cwnwrywccfxwab22.jpg");

@@ -1,6 +1,6 @@
 # [MyCustomBannerView](https://github.com/Thor-jelly/MyCustomBannerView)
 
-[![GitHub release](https://img.shields.io/badge/release-1.0.9-green.svg)](https://github.com/Thor-jelly/MyCustomBannerView/releases)
+[![GitHub release](https://img.shields.io/badge/release-1.1.1-green.svg)](https://github.com/Thor-jelly/MyCustomBannerView/releases)
 
 ```
 allprojects {
@@ -10,7 +10,7 @@ allprojects {
 	}
 }
 dependencies {
-    compile 'com.github.Thor-jelly: MyCustomBannerView:1.0.9'
+    compile 'com.github.Thor-jelly: MyCustomBannerView:最新版本号'
 }
 ```
 

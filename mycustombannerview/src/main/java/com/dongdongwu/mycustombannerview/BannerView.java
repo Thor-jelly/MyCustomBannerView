@@ -187,6 +187,9 @@ public class BannerView extends RelativeLayout {
         if (mBannerAdapter.getCount() > 1) {
             mBannerVp.setEnabledAutoScroll(mEnableAutoScroll);
             //如果是点自动初始化点，如果是number类型，需要自定义创建view
+            if (mBannerDotLl.getChildCount() > 0) {
+                mBannerDotLl.removeAllViews();
+            }
             if (mDotHintType == 0) {
                 //初始化点的指示器
                 initDotIndicator();
