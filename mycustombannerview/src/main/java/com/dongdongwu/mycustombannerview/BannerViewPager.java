@@ -193,6 +193,7 @@ public class BannerViewPager extends ViewPager {
         mHandler = null;
         mActivity.getApplication().unregisterActivityLifecycleCallbacks(mDefaultActivityLifecycleCallbacks);
         mDefaultActivityLifecycleCallbacks = null;
+        mActivity = null;
         if (mViewContainerList != null) {
             mViewContainerList.clear();
         }
