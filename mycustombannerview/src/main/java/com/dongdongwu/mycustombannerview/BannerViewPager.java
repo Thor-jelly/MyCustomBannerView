@@ -12,12 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import java.lang.ref.SoftReference;
-import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -311,7 +309,7 @@ public class BannerViewPager extends ViewPager {
         private SoftReference<Activity> srActivity;
         private SoftReference<BannerViewPager> srVp;
 
-        public MyActivityLifecycleCallbacks(Activity activity, BannerViewPager vp){
+        public MyActivityLifecycleCallbacks(Activity activity, BannerViewPager vp) {
             srActivity = new SoftReference<>(activity);
             srVp = new SoftReference<>(vp);
         }
@@ -321,7 +319,7 @@ public class BannerViewPager extends ViewPager {
             super.onActivityResumed(activity);
             Log.d(TAG, "onActivityResumed: ");
             //是不是监听当前activity的生命周期
-            if (srActivity == null ||srActivity.get() != activity) {
+            if (srActivity == null || srActivity.get() == null || srActivity.get() != activity) {
                 return;
             }
 
@@ -341,7 +339,7 @@ public class BannerViewPager extends ViewPager {
             super.onActivityStopped(activity);
             Log.d(TAG, "onActivityStopped: ");
             //是不是监听当前activity的生命周期
-            if (srActivity == null ||srActivity.get() != activity) {
+            if (srActivity == null || srActivity.get() == null || srActivity.get() != activity) {
                 return;
             }
 
