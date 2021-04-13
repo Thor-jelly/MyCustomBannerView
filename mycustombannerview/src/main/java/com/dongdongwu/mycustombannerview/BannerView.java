@@ -169,6 +169,8 @@ public class BannerView extends RelativeLayout {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
+        Context context = getRootView().getContext();
+        context = null;
         mContext = null;
     }
 
