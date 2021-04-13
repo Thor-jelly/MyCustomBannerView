@@ -198,6 +198,7 @@ public class BannerViewPager extends ViewPager {
             mViewContainerList.clear();
         }
         mViewContainerList = null;
+        mBannerAdapter = null;
 
         super.onDetachedFromWindow();
 
@@ -300,7 +301,7 @@ public class BannerViewPager extends ViewPager {
         }
     }
 
-    DefaultActivityLifecycleCallbacks mDefaultActivityLifecycleCallbacks = new DefaultActivityLifecycleCallbacks() {
+    private DefaultActivityLifecycleCallbacks mDefaultActivityLifecycleCallbacks = new DefaultActivityLifecycleCallbacks() {
         @Override
         public void onActivityResumed(Activity activity) {
             super.onActivityResumed(activity);
